@@ -2,6 +2,8 @@ import com.roy_scala.ml.d_cluster.d_cluster
 import com.roy_scala.util.mil
 import com.roy_scala.util.json
 import com.roy_scala.util.IO
+import com.roy_scala.util
+import com.roy_scala.nlp.vocabulary_miner.get_tf
 import com.roy_scala.ml.d_cluster
 import play.api.libs.json.JsValue
 
@@ -35,12 +37,22 @@ object test {
     val clu = d_cluster.clustering()
     */
 
-
+    /*
     val a = Map("token" -> "c", "content" -> "bbb")
     val b = List(List(1,2,333),2,Map("a"->2))
     val m_str = json.json_dumps(b)
     println(m_str)
+     */
 
+    val pth = "D:\\workspace\\Taikor_NLP_service\\fundamental_service\\CN_PoS_Segmentation_Horizontal_Test\\SIGHan\\icwb2-data\\testing\\pku_test.utf8"
+    val test_str = IO.FileIO.read(pth)
+    println(test_str.length())
+    val timer = new util.Timer()
+    timer.start()
+    val result = get_tf(test_str)
+    timer.end()
+    println(timer.time_c)
+    println(result.mkString(" "))
   }
 }
 

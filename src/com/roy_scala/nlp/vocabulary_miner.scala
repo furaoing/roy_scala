@@ -30,9 +30,10 @@ object vocabulary_miner {
     tf
   }
 
-  def get_tf(content:String):mutable.Map[String, Int] = {
+  def get_tf(content:String):Array[(String, Int)] = {
     val token_candidate:Array[String] = tokenize(content)
     val tf:mutable.Map[String, Int] = construct_tf(token_candidate)
-    tf
+    tf.toArray.sortBy(_._2)
   }
+
 }
