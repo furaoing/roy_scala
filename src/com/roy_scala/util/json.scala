@@ -1,6 +1,6 @@
 package com.roy_scala.util
 
-import IO.FileIO._
+import com.roy_scala.util.IO.FileIO._
 import scala.util.parsing.json.JSON
 
 /**
