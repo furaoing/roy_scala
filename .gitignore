@@ -43,9 +43,12 @@ Temporary Items
 .apdisk
 
 # IDE files
-.iml
-.idea
-
+*.iml
+idea/
 
 # IDE compliation output
-out
+out/
+*.class
+*.out
+*.obj
+*.a
