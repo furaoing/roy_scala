@@ -46,6 +46,8 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
       _feed_forward(start_layer, input, layers)
     }
 
+    // def backpropagation
+
 
 }
 

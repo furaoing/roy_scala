@@ -11,6 +11,7 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
     val width = _width
     var nodes:List[node] = List()
     var output:Array[Double] = Array()
+    var error:Array[Double] = Array()
     val init = _init
 
     def initialize():Unit = {
@@ -24,5 +25,9 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
     def _feed_forward(_input:Array[Double]):Array[Double] = {
         output = Array.tabulate(width)(x=>nodes(x).process(_input))
         output
+    }
+
+    def _bp(_layer_id:Int, _error:Array[Double]):Array[Double] = {
+        
     }
 }

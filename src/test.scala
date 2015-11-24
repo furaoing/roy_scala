@@ -56,7 +56,7 @@ object test {
     println(result.mkString(" "))
     */
 
-   val graph = List(3,3,3)
+   val graph = List(3,2,4)
    val a = new network(1, graph, mil.random_double, 0.2)
   }
 }
