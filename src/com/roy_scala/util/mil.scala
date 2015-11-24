@@ -1,5 +1,6 @@
 package com.roy_scala.util
 import scala.util.Random
+
 /**
  * Created by roy on 2015/10/22.
  */
@@ -15,13 +16,13 @@ object mil {
     target
   }
 
-  def random_float(n_type:String): Float= {
+  def random_float(): Float= {
     val r_obj = new Random()
     val random_n = r_obj.nextFloat()
     random_n
   }
 
-  def random_double(n_type:String): Double= {
+  def random_double(): Double= {
     val r_obj = new Random()
     val random_n = r_obj.nextDouble()
     random_n

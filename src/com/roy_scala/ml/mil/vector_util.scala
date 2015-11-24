@@ -5,10 +5,10 @@ package com.roy_scala.ml.mil
  */
 
 object vector_util {
-  def dot_product(x:Array[Float], y:Array[Float]):Float = {
+  def dot_product(x:Array[Double], y:Array[Double]):Double = {
     var array_len = x.length
-    var result:Float = 0f
-    var buffer:Float = 0f
+    var result:Double = 0d
+    var buffer:Double = 0d
     while (array_len >= 1)
       {
         buffer = x(array_len-1) * y(array_len-1)
@@ -18,20 +18,20 @@ object vector_util {
     result
   }
 
-  def vector_norm(x:Array[Float]):Float = {
+  def vector_norm(x:Array[Double]):Double = {
     var array_len = x.length
-    var result:Float = 0f
-    var buffer:Float = 0f
+    var result:Double = 0f
+    var buffer:Double = 0f
     while (array_len >= 1)
       {
         buffer = x(array_len-1) * x(array_len-1)
         result += buffer
         array_len -= 1
       }
-    math.sqrt(result).toFloat
+    math.sqrt(result).toDouble
   }
 
-  def cosine(x:Array[Float], y:Array[Float]) = {
+  def cosine(x:Array[Double], y:Array[Double]) = {
     val dot_prod = dot_product(x, y)
     val result = dot_prod/(vector_norm(x) * vector_norm(y))
     result

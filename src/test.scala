@@ -56,9 +56,8 @@ object test {
     println(result.mkString(" "))
     */
 
-
-   val a = Array(1,2,3)
-    val b:Array[String] = a.map((x:Int)=>x.toString)
+   val graph = List(3,3,3)
+   val a = new network(1, graph, mil.random_double, 0.2)
   }
 }
 
