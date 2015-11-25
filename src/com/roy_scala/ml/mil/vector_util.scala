@@ -1,5 +1,5 @@
 package com.roy_scala.ml.mil
-
+import scala.math
 /**
  * Created by roy on 2015/10/28.
  */
@@ -28,13 +28,31 @@ object vector_util {
         result += buffer
         array_len -= 1
       }
-    math.sqrt(result).toDouble
+    math.sqrt(result)
   }
 
   def cosine(x:Array[Double], y:Array[Double]) = {
     val dot_prod = dot_product(x, y)
     val result = dot_prod/(vector_norm(x) * vector_norm(y))
     result
+  }
+
+  def vector_diff(x:Array[Double], y:Array[Double]):Array[Double] = {
+    val z:Array[Double] = Array.fill[Double](x.length)(0)
+    for(i <- x.indices)
+    {
+        z(i) = x(i) - y(i)
+    }
+    z
+  }
+
+  def vector_comp(a:Array[Double], b:Array[Double], f:(Double, Double)=>Double):Array[Double] = {
+    val z:Array[Double] = Array.fill[Double](b.length)(0)
+    for(i <- a.indices)
+    {
+        z(i) = f(a(i), b(i))
+    }
+    z
   }
 
 }

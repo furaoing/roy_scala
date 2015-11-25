@@ -6,6 +6,7 @@ import com.roy_scala.util
 import com.roy_scala.nlp.vocabulary_miner.get_tf
 import com.roy_scala.ml.d_cluster
 import com.roy_scala.nn.prototypes._
+import com.roy_scala.util.Timer
 
 // import com.roy_scala.util.json
 import com.roy_scala.ml.mil.collection
@@ -56,8 +57,43 @@ object test {
     println(result.mkString(" "))
     */
 
-   val graph = List(3,2,4)
-   val a = new network(1, graph, mil.random_double, 0.2)
+    val tmr = new Timer()
+   val graph = List(4,20,1)
+    val my_input = Array(Array(1d,0d),
+                         Array(0d,1d),
+                         Array(1d,1d),
+                         Array(0d,0d)
+    )
+    val target_output = Array(Array(0d),
+                         Array(0d),
+                         Array(1d),
+                         Array(1d)
+    )
+   val a = new network(1, graph, 5, mil.random_double, 0.01)
+    a.initialize()
+    tmr.start()
+    for (j <- 0 until 2000) {
+      for (i <- 0 until 4) {
+        a.alpha *= 0.95
+        val e_input = my_input(i)
+        val e_target = target_output(i)
+        a.receive(e_input, e_target)
+        a.feed_forward()
+        a.bp()
+        println(a.output.mkString(" "))
+      }
+    }
+    tmr.end()
+    println(tmr.time_c)
+
+    for (i <- 0 until 4) {
+        val e_input = my_input(i)
+        val e_target = target_output(i)
+        a.receive(e_input, e_target)
+        a.feed_forward()
+        println(e_input.mkString(" "))
+        println(a.output.mkString(" "))
+      }
   }
 }
 

@@ -1,11 +1,12 @@
 package com.roy_scala.nn.prototypes
-
+import com.roy_scala.math.mil
+import com.roy_scala.ml.mil.vector_util
 /**
  * Created by rao on 15-11-22.
  */
 
 
-class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
+class network(_id:Int, _graph:AnyRef, _n_inputs:Int, _init:() => Double, _alpha:Double) {
     val id = _id
     var graph = _graph match {
       case g:List[Int @unchecked] => g
@@ -13,26 +14,31 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
     val init = _init
     var layers:List[layer] = List()
     var alpha = _alpha
+    var n_inputs = _n_inputs
     var input:Array[Double] = Array()
     var output:Array[Double] = Array()
-    var _target_ouput:Array[Double] = Array()
+    var target_ouput:Array[Double] = Array()
+    var errors:Array[Double] = Array()
+    var error:Double = 0d
 
     def initialize():Unit = {
       layers = graph.map((x:Int)=>new layer(graph.indexOf(x), x, init))
-      for (x <- layers) x.initialize()
+      layers.head.initialize(n_inputs)
+      // Initialize the first hidden layer
+      for (i <- 1 until layers.length) layers(i).initialize(layers(i-1).width)
+      // Initialize hidden layers other than the first one
     }
 
     def receive(_input:Array[Double], _target_ouput:Array[Double]):Unit = {
       input = _input
-      output = _target_ouput
+      target_ouput = _target_ouput
     }
 
     def _feed_forward(_layer_id:Int, _input:Array[Double], _layers:List[layer]):Array[Double] = {
         var i = _layer_id
-        if(i >= _layers.length-1)
+        if(i >= _layers.length)
           {
-            val output = _input
-            output
+            _input
           }
         else {
               val layer_output = _layers(i).feed_forward(_input)
@@ -43,10 +49,27 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
 
     def feed_forward():Array[Double] = {
       val start_layer = 0
-      _feed_forward(start_layer, input, layers)
+      output = _feed_forward(start_layer, input, layers)
+      errors = vector_util.vector_diff(output, target_ouput)
+      error = mil.squared_error(output, target_ouput)
+      output
     }
 
-    // def backpropagation
+    def _bp(_layer_id:Int, _deltas:Array[Double], _layers:List[layer], output_layer:Int, _alpha:Double):Unit = {
+        var i = _layer_id
+        if(i < 0){}
+        else {
+              val delta = _layers(i).bp(_deltas, output_layer, _alpha, _layers)
+              i -= 1
+              _bp(i, delta, _layers, output_layer, _alpha)
+        }
+    }
+
+    def bp():Unit = {
+        val start_layer = layers.length - 1
+        val output_layer = start_layer
+        _bp(start_layer, errors, layers, output_layer, alpha)
+    }
 
 
 }

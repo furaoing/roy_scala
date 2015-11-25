@@ -9,8 +9,9 @@ class node(_id: Int, _weight:Array[Double], _bias:Double) {
     val id = _id
     var weight = _weight
     var output = 0d
-    var error = 0d
+    var delta = 0d
     var bias = _bias
+    var input = 0d
 
     def receive_addup(_input:Array[Double]):Double = vector_util.dot_product(_input, weight) + bias
 
@@ -24,7 +25,8 @@ class node(_id: Int, _weight:Array[Double], _bias:Double) {
     }
 
     def update_weight(_alpha:Double):Unit = {
-        weight.foreach((x:Double)=>x+_alpha*error*output)
-        bias = _alpha*error
+        weight.foreach((x:Double) => x + _alpha*delta*input)
+        bias += _alpha*delta
     }
+
 }
