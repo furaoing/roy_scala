@@ -25,7 +25,8 @@ class node(_id: Int, _weight:Array[Double], _bias:Double) {
     }
 
     def process(_input:Array[Double]):Double= {
-        activate(receive_addup(_input))
+        val weighted_sum = receive_addup(_input)
+        activate(weighted_sum)
     }
 
     def update_weight(_alpha:Double):Unit = {

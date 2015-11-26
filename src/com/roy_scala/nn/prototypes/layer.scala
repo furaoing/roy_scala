@@ -20,17 +20,14 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
         nodes = List.tabulate(width)(x=>new node(x, Array.fill[Double](n_weight)(init()),init()))
     }
 
-    def feed_forward(_input:Array[Double]):Array[Double] = {
-        _feed_forward(_input)
-        }
 
-    def _feed_forward(_input:Array[Double]):Array[Double] = {
-        output = Array.tabulate(width)(x=>nodes(x).process(_input))
+    def feed_forward(_input:Array[Double]):Array[Double] = {
+        output = Array.tabulate(width)(i=>nodes(i).process(_input))
         output
     }
 
-    def bp(_deltas:Array[Double], _output_layer:Int, _alpha:Double, _layers:List[layer]):Array[Double] = {
-        if (id == _output_layer)
+    def bp(_deltas:Array[Double], _alpha:Double, _layers:List[layer]):Array[Double] = {
+        if (id == _layers.length - 1)
             {
                 deltas = vector_util.vector_comp(output, _deltas, cal_delta_f)
                 for (i <- nodes.indices) {
