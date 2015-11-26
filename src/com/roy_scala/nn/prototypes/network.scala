@@ -22,7 +22,7 @@ class network(_id:Int, _graph:AnyRef, _n_inputs:Int, _init:() => Double, _alpha:
     var error:Double = 0d
 
     def initialize():Unit = {
-      layers = graph.map((x:Int)=>new layer(graph.indexOf(x), x, init))
+      layers = List.tabulate(graph.length)(i=>new layer(i, graph(i), init))
       layers.head.initialize(n_inputs)
       // Initialize the first hidden layer
       for (i <- 1 until layers.length) layers(i).initialize(layers(i-1).width)
@@ -50,7 +50,7 @@ class network(_id:Int, _graph:AnyRef, _n_inputs:Int, _init:() => Double, _alpha:
     def feed_forward():Array[Double] = {
       val start_layer = 0
       output = _feed_forward(start_layer, input, layers)
-      errors = vector_util.vector_diff(output, target_ouput)
+      errors = vector_util.vector_diff(target_ouput, output)
       error = mil.squared_error(output, target_ouput)
       output
     }

@@ -57,8 +57,10 @@ object test {
     println(result.mkString(" "))
     */
 
+
     val tmr = new Timer()
-   val graph = List(4,20,1)
+   val graph = List(3,3,3,1)
+
     val my_input = Array(Array(1d,0d),
                          Array(0d,1d),
                          Array(1d,1d),
@@ -69,18 +71,19 @@ object test {
                          Array(1d),
                          Array(1d)
     )
-   val a = new network(1, graph, 5, mil.random_double, 0.01)
+   val a = new network(1, graph, 2, mil.random_double, 0.05)
     a.initialize()
     tmr.start()
-    for (j <- 0 until 2000) {
+    for (j <- 0 until 10000) {
       for (i <- 0 until 4) {
-        a.alpha *= 0.95
+        a.alpha *= 0.9
         val e_input = my_input(i)
         val e_target = target_output(i)
         a.receive(e_input, e_target)
         a.feed_forward()
         a.bp()
-        println(a.output.mkString(" "))
+        // println(a.layers(0).nodes(0).weight(0))
+        println(a.error)
       }
     }
     tmr.end()
@@ -94,6 +97,18 @@ object test {
         println(e_input.mkString(" "))
         println(a.output.mkString(" "))
       }
+
+    /*
+    def give_one() = 1.0d
+    val graph = List(1, 1)
+    val a = new network(1, graph, 1, give_one, 0.01)
+    val input = Array(1.0d)
+    a.initialize()
+    a.receive(input, Array(1.0d))
+    a.feed_forward()
+    a.bp()
+    println(a.layers(0).nodes(0).delta)
+    */
   }
 }
 

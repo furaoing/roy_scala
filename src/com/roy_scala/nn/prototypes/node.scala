@@ -11,9 +11,13 @@ class node(_id: Int, _weight:Array[Double], _bias:Double) {
     var output = 0d
     var delta = 0d
     var bias = _bias
-    var input = 0d
+    var input:Array[Double] = Array()
 
-    def receive_addup(_input:Array[Double]):Double = vector_util.dot_product(_input, weight) + bias
+    def receive_addup(_input:Array[Double]):Double =
+        {
+            input = _input
+            vector_util.dot_product(_input, weight) + bias
+        }
 
     def activate(_input:Double):Double = {
         output = mil.sigmoid(_input)
@@ -25,7 +29,8 @@ class node(_id: Int, _weight:Array[Double], _bias:Double) {
     }
 
     def update_weight(_alpha:Double):Unit = {
-        weight.foreach((x:Double) => x + _alpha*delta*input)
+        for (i <- weight.indices)
+            weight(i) += _alpha*delta*input(i)
         bias += _alpha*delta
     }
 
