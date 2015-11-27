@@ -6,6 +6,8 @@ import scala.math
 
 object vector_util {
   def dot_product(x:Array[Double], y:Array[Double]):Double = {
+    if (x.length != y.length)
+      throw new Exception
     var array_len = x.length
     var result:Double = 0d
     var buffer:Double = 0d
@@ -38,6 +40,9 @@ object vector_util {
   }
 
   def vector_diff(x:Array[Double], y:Array[Double]):Array[Double] = {
+    if (x.length != y.length)
+      throw new Exception
+
     val z:Array[Double] = Array.fill[Double](x.length)(0)
     for(i <- x.indices)
     {
@@ -47,6 +52,9 @@ object vector_util {
   }
 
   def vector_comp(a:Array[Double], b:Array[Double], f:(Double, Double)=>Double):Array[Double] = {
+    if (a.length != b.length)
+        throw new Exception
+
     val z:Array[Double] = Array.fill[Double](b.length)(0)
     for(i <- a.indices)
     {

@@ -3,7 +3,7 @@ import scala.math
 import com.roy_scala.ml.mil.vector_util
 /**
  * Created by roy on 2015/11/23.
- */
+ */ 
 object mil {
     def sigmoid(x:Double):Double = 1/(1+math.exp(-x))
 

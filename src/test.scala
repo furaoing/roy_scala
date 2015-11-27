@@ -57,32 +57,30 @@ object test {
     println(result.mkString(" "))
     */
 
+    def ran():Double = 1
 
     val tmr = new Timer()
-   val graph = List(3,3,3,1)
+   val graph = List(1,1,1,1)
 
-    val my_input = Array(Array(1d,0d),
-                         Array(0d,1d),
-                         Array(1d,1d),
-                         Array(0d,0d)
+    val my_input = Array(Array(0.9d),
+                         Array(0.9d),
+                         Array(0.9d),
+                         Array(0.9d)
     )
-    val target_output = Array(Array(0d),
-                         Array(0d),
+    val target_output = Array(Array(1d),
+                         Array(1d),
                          Array(1d),
                          Array(1d)
     )
-   val a = new network(1, graph, 2, mil.random_double, 0.05)
+   val a = new network(1, graph, ran, 1)
     a.initialize()
     tmr.start()
     for (j <- 0 until 10000) {
       for (i <- 0 until 4) {
-        a.alpha *= 0.9
+        a.alpha *= 1
         val e_input = my_input(i)
         val e_target = target_output(i)
-        a.receive(e_input, e_target)
-        a.feed_forward()
-        a.bp()
-        // println(a.layers(0).nodes(0).weight(0))
+        a.train(e_input, e_target)
         println(a.error)
       }
     }

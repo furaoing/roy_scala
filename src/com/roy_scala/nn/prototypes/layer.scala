@@ -32,7 +32,6 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
                 deltas = vector_util.vector_comp(output, _deltas, cal_delta_f)
                 for (i <- nodes.indices) {
                     nodes(i).delta = deltas(i)
-                    nodes(i).update_weight(_alpha)
                 }
                 deltas
             }
@@ -43,11 +42,16 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
                     for (j <- _layers(id+1).nodes.indices)
                         tmp += _layers(id+1).nodes(j).weight(i)*_layers(id+1).nodes(j).delta
                     nodes(i).delta = cal_delta_f(nodes(i).output, tmp)
-                    nodes(i).update_weight(_alpha)
                 }
                 deltas = nodes.map((x:node)=>x.delta).toArray
                 deltas
             }
+    }
+
+    def update(_alpha:Double) = {
+        for (i <- nodes.indices) {
+            nodes(i).update_weight(_alpha)
+        }
     }
 
 }
