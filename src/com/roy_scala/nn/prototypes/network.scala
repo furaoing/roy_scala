@@ -59,6 +59,17 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
           }
     }
 
+    def train(_input:Array[Double], _target_ouput:Array[Double]):Double = {
+      receive(_input, _target_ouput)
+      feed_forward()
+      bp()
+      error
+    }
 
+    def activate(_input:Array[Double]) = {
+        input = _input
+        val act_output = feed_forward()
+        act_output
+    }
 }
 
