@@ -23,7 +23,9 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
     def initialize():Unit = {
       val graph_hidden_part = graph.tail
       val n_input = graph.head
+
       layers = List.tabulate(graph_hidden_part.length)(i=>new layer(i, graph_hidden_part(i), init))
+
       layers.head.initialize(n_input)
       // Initialize the first hidden layer
       for (i <- 1 until layers.length) layers(i).initialize(layers(i-1).width)
@@ -47,7 +49,7 @@ class network(_id:Int, _graph:AnyRef, _init:() => Double, _alpha:Double) {
     def feed_forward():Array[Double] = {
       output = _feed_forward()
       errors = vector_util.vector_diff(target_ouput, output)
-      error = mil.squared_error(output, target_ouput)
+      error = 0.5*mil.squared_error(output, target_ouput)
       output
     }
 

@@ -60,29 +60,31 @@ object test {
     def ran():Double = 1
 
     val tmr = new Timer()
-   val graph = List(1,1,1,1)
+   val graph = List(2,2,2,1)
 
-    val my_input = Array(Array(0.9d),
-                         Array(0.9d),
-                         Array(0.9d),
-                         Array(0.9d)
+    val my_input = Array(Array(1d, 0d),
+                         Array(0d, 1d),
+                         Array(1d, 1d),
+                         Array(0d, 0d)
     )
-    val target_output = Array(Array(1d),
-                         Array(1d),
+    val target_output = Array(Array(0d),
+                         Array(0d),
                          Array(1d),
                          Array(1d)
     )
    val a = new network(1, graph, ran, 1)
     a.initialize()
     tmr.start()
-    for (j <- 0 until 10000) {
+    for (j <- 0 until 500000) {
+      var epoch_error = 0d
       for (i <- 0 until 4) {
         a.alpha *= 1
         val e_input = my_input(i)
         val e_target = target_output(i)
         a.train(e_input, e_target)
-        println(a.error)
+        epoch_error += a.error
       }
+      // println(epoch_error)
     }
     tmr.end()
     println(tmr.time_c)

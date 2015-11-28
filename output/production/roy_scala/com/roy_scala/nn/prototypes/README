@@ -1,0 +1,18 @@
+NN Module Design Choice:
+
+1. Each layer has an output vector only.
+ Reason: The shape of the output vector is determined by the width of the layer.
+ Each layer is independent, a behiend layer has no knowledge of the structure of the
+ previous layer, therefore the input vector
+
+
+2. The input of the layer and the input of each node on this layer are identical
+
+3. Weigth is an attribute that belongs to each node, which refers to the conection between
+this node and all the nodes of the previous layer
+
+4. The external object method calls will be a wrapper function that requires no argument. The object method definition
+will be written in purely object oriented style (access/modify object attribute)
+
+5. The internal functions defined will start with a underscore (_), that will be written in purely
+functional style (requires all necessary data to be passed in by function arguments)

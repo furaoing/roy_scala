@@ -37,8 +37,8 @@ class layer(_id:Int, _width:Int, _init:() => Double) {
             }
         else
             {
-                var tmp = 0d
                 for (i <- nodes.indices) {
+                    var tmp = 0d
                     for (j <- _layers(id+1).nodes.indices)
                         tmp += _layers(id+1).nodes(j).weight(i)*_layers(id+1).nodes(j).delta
                     nodes(i).delta = cal_delta_f(nodes(i).output, tmp)
