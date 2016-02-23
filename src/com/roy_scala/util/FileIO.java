@@ -6,17 +6,10 @@ package com.roy_scala.util;
 import java.io.*;
 
 public class FileIO {
-    public String in;
-    public String out;
-    public FileIO(String f_in, String f_out){
-        // initialize FileIO object, assign attribute values
-        in = f_in;
-        out = f_out;
-    }
 
-    public String read_f() {
+    public static String f_read(String file) {
         try {
-            File fileDir = new File(this.in);
+            File fileDir = new File(file);
 
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(
@@ -41,15 +34,15 @@ public class FileIO {
         }
     }
 
-    public int write_f(String PoS){
+    public static int f_write(String file, String content){
         try {
-            File fileDir = new File(this.out);
+            File fileDir = new File(file);
 
             BufferedWriter br = new BufferedWriter(
                     new OutputStreamWriter(
                             new FileOutputStream(fileDir), "UTF8"));
 
-            br.write(PoS);
+            br.write(content);
             br.close();
             return 0;
         }
