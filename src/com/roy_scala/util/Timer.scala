@@ -12,7 +12,7 @@ class Timer {
       start_time = System.currentTimeMillis()
     }
 
-    def time():Unit = {
+    private def time():Unit = {
       time_c = end_time - start_time
     }
 
@@ -21,3 +21,10 @@ class Timer {
       time()
     }
   }
+
+object Timer {
+  def pause(pause_time:Int) {
+    Thread sleep pause_time
+  }
+}
+
