@@ -1,4 +1,4 @@
-package test2
+package com.roy_scala.algorithm
 
 case class AdjacentVertex(_id:Int, _edge_len:Int) {
     val id = _id
